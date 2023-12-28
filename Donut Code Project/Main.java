@@ -11,6 +11,10 @@ public class Main
     public static Double[][] zbuffer;
     public static double A = Math.PI/13;
     public static double B = Math.PI/13;
+    public static double xo = 25;
+    public static double yo = 25;
+    public static double zo = 25;
+    public static double s = 7;
 
     public static void main(String args[]) throws IOException
     {
@@ -52,11 +56,11 @@ public class Main
             clearScreen();
 
             /* Best Results */
-            print(initiateTorus(i));
+            //print(initiateTorus(i));
             
             /* Luminescense attempt 1 */
             //rotateTorus(i);
-           //printTorusRT(i);
+            //printTorusLum(i);
 
             /* Distance */
             //rotateTorus(i);
@@ -90,7 +94,7 @@ public class Main
         }
 
         /* Parameterized by theta and phi */
-        /*
+        
         for (double theta = 0; theta < 2*Math.PI; theta += .07)
         {
             for (double phi = 0; phi < 2*Math.PI; phi += .02)
@@ -120,6 +124,25 @@ public class Main
                 int xp = (int) (nx / (1 - (nz / 150.0)));
                 int yp = (int) (ny / (1 - (nz / 150.0)));
 
+                if (xp > 49)
+                {
+                    xp = 49;
+                }
+                else if (xp < 0)
+                {
+                    xp = 0;
+                }
+
+                if (yp > 49)
+                {
+                    yp = 49;
+                }
+                else if (yp < 0)
+                {
+                    yp = 0;
+                }
+
+
                 // Donut 
                 double L = Math.abs(Math.cos(phi)*Math.cos(theta)*Math.sin(c*B) - Math.cos(c*A)*Math.cos(theta)*Math.sin(phi) - Math.sin(c*A)*Math.sin(theta) + Math.cos(c*B)*((Math.cos(c*A)*Math.sin(theta) - Math.cos(theta)*Math.sin(c*A)*Math.sin(phi))));
                 
@@ -143,9 +166,10 @@ public class Main
         }
 
         return proj_torus;
-        */
+
 
         /* Parameterized by u, v, w */
+        /*
         for (double u = -1; u <= 1; u += .1)
         {
             for (double v = -1; v <= 1; v += .1)
@@ -154,11 +178,11 @@ public class Main
                 {
                     // Cube
                     
-                    double x = (25 + 7*u); 
-                    double y = (25 + 7*v);
-                    double z = (25 + 7*w);
+                    double x = (xo + s*u); 
+                    double y = (yo + s*v);
+                    double z = (zo + s*w);
                     
-                    torus_xyz[(int) x][(int) y][(int) z]++;
+                    //torus_xyz[(int) x][(int) y][(int) z]++;
 
                     double[] res = matrix_vector_multiplication(new double[]{x, y, z, 1}, c);
                     double nx = res[0];
@@ -166,32 +190,50 @@ public class Main
                     double nz = res[2];
                     double ooz = 1/nz;
 
-                    int xp = (int) (nx / (1 - (nz / 250.0)));
-                    int yp = (int) (ny / (1 - (nz / 250.0)));
+                    int xp = (int) (nx / (1 - (nz / 150.0)));
+                    int yp = (int) (ny / (1 - (nz / 150.0)));
+
+                    if (xp > 49)
+                    {
+                        xp = 49;
+                    }
+                    else if (xp < 0)
+                    {
+                        xp = 0;
+                    }
+
+                    if (yp > 49)
+                    {
+                        yp = 49;
+                    }
+                    else if (yp < 0)
+                    {
+                        yp = 0;
+                    }
 
                     double[] N = new double[]{0, 0, 0, 0};
 
-                    if (x == 18)
+                    if (x == xo - s)
                     {
                         N = new double[]{-1, 0, 0, 0};
                     }
-                    else if (x == 32)
+                    else if (x == xo + s)
                     {
                         N = new double[]{1, 0, 0, 0};
                     }
-                    else if (y == 18)
+                    else if (y == yo - s)
                     {
                         N = new double[]{0, -1, 0, 0};
                     }
-                    else if (y == 32)
+                    else if (y == yo + s)
                     {
                         N = new double[]{0, 1, 0, 0};
                     }
-                    else if (z == 18)
+                    else if (z == zo - s)
                     {
                         N = new double[]{0, 0, -1, 0};
                     }
-                    else if (z == 32)
+                    else if (z == zo + s)
                     {
                         N = new double[]{0, 0, 1, 0};
                     }
@@ -203,7 +245,7 @@ public class Main
 
                     if (L >= 0)
                     {
-                        if (ooz >= zbuffer[xp][yp])
+                        if (ooz > zbuffer[xp][yp])
                         {
                             zbuffer[xp][yp] = ooz;
                             String str = ".,-~:;=!*#$@";
@@ -212,13 +254,14 @@ public class Main
                         }
                     }
                 
-                    /* Projected Frequencies */
+                    // Projected Frequencies 
                     torus_i[xp][yp]++;
                 }
             }
         }
 
         return proj_torus;
+        */
 
     }
     
