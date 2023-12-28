@@ -48,19 +48,26 @@ public class Donut_Code
                 double crosssection_x = R2 + R1*Math.cos(theta);
                 double crosssection_y = R1*Math.sin(theta);
 
+                /*
                 double x = 25 + crosssection_x*(Math.cos(c*B)*Math.cos(phi) + Math.sin(c*A)*Math.sin(c*B)*Math.sin(phi)) - crosssection_y*Math.cos(c*A)*Math.sin(c*B);
-
                 double y = 25 + crosssection_x*(Math.sin(c*B)*Math.cos(phi) - Math.sin(c*A)*Math.cos(c*B)*Math.sin(phi)) + crosssection_y*Math.cos(c*A)*Math.cos(c*B);
                 double z = 25 + Math.cos(c*A)*crosssection_x*Math.sin(phi) + crosssection_y*Math.sin(c*A);
+                */
+
+                double x = 25 + 14*Math.cos(theta)*Math.sin(phi); 
+                double y = 25 + 14*Math.sin(theta)*Math.sin(phi); 
+                double z = 25 + 14*Math.cos(phi);
+                
 
                 double ooz = 1/z;
 
                 int xp = (int) (x / (1 - (z / K1)));
                 int yp = (int) (y / (1 - (z / K1)));
 
-                double L = Math.cos(phi)*Math.cos(theta)*Math.sin(c*B) - Math.cos(c*A)*Math.cos(theta)*Math.sin(phi) - Math.sin(c*A)*Math.sin(theta) + Math.cos(c*B)*((Math.cos(c*A)*Math.sin(theta) - Math.cos(theta)*Math.sin(c*A)*Math.sin(phi)));
+                //double L = Math.cos(phi)*Math.cos(theta)*Math.sin(c*B) - Math.cos(c*A)*Math.cos(theta)*Math.sin(phi) - Math.sin(c*A)*Math.sin(theta) + Math.cos(c*B)*((Math.cos(c*A)*Math.sin(theta) - Math.cos(theta)*Math.sin(c*A)*Math.sin(phi)));
+                double L = ((y - 25) - (z - 25))/14;
 
-                if (L > 0)
+                if (L >= 0)
                 {
                     if (ooz >= zbuffer[xp][yp])
                     {
